@@ -17,15 +17,16 @@ if __name__ == "__main__":
     latitudes = lat_lon_pairs[:, 0]
     longitudes = lat_lon_pairs[:, 1]
 
-    # DBSCAN is in O(n^2) so I can just run small point chunks at a time to detect clusters
+    # DBSCAN is in O(n^2) so if data gets too large, run small point chunks at a time to detect clusters
     start_time = time.time()
-    radius = 20/6371000 # 20m in haversine distance from radians
+    radius = 10/6371000 # 20m in haversine distance from radians
     clusters = gc.get_clusters(lat_lon_pairs, eps=radius , min_samples=20) #120 samples is 5 minutes
     print("Time taken to cluster: ", time.time() - start_time)
     geodata = osmq.get_cluster_details(clusters)
 
-    print(geodata)
-
+    for cluster in geodata:
+        print(cluster["type"], cluster["name"])
+    
     # For debugging purposes:
     # for cluster in clusters.values():
     #     print(len(cluster[2]))

@@ -5,12 +5,12 @@ import get_clusters as gc
 import time
 
 if __name__ == "__main__":
-    file_loc = "GeoLingo_Location2.csv" # geolocation data from phone
+    file_loc = "location3.csv" # geolocation data from phone
     with open(file_loc, 'r') as file:
         data = file.readlines()
     data = sorted(data[1:], key=lambda x: x.split(',')[0])
 
-    data = data[::400] # roughly one location every second
+    #data = data[::400] # roughly one location every second
 
     lat_lon_pairs = np.array([[float(line.split(',')[1]), float(line.split(',')[2])] for line in data[1:]])
     
